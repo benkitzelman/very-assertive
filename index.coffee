@@ -1,0 +1,1 @@
+module.exports = require 'src/hash_equality'

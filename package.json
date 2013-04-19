@@ -1,0 +1,25 @@
+{
+  "name": "very-assertive",
+  "version": "0.0.1",
+  "description": "Should should be more assertive... harnessing the power of the interwebs it shall be .... very assertive",
+  "homepage": "http://thecodeabode.blogspot.com",
+  "author": {
+    "name": "Ben Kitzelman",
+    "email": "benkitzelman@gmail.com",
+    "url": "http://thecodeabode.blogspot.com"
+  },
+  "main": "index.coffee",
+  "repository": {
+    "type": "git",
+    "url": "git://gitorious.org/node-assert-extras/mainline.git"
+  },
+  "dependencies": {
+    "coffee-script": "latest",
+    "difflet": "latest",
+    "charm": "0.0.x"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
+}
