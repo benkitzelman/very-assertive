@@ -1,4 +1,4 @@
 very-assertive
 ==============
 
-A collection of should assertions
+A collection of node.js should library assertions 
