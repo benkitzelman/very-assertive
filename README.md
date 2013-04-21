@@ -5,6 +5,17 @@ very-assertive
 
 A collection of node.js should library assertions
 
+using
+=====
+
+very-assertive mixes in with other should assertions, therefore all you need to do is require it...
+
+```coffeescript
+
+require 'very-assertive'
+
+```
+
 equalObject
 ===========
 
