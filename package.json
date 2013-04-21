@@ -9,17 +9,20 @@
     "url": "http://thecodeabode.blogspot.com"
   },
   "main": "index.coffee",
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "git://gitorious.org/node-assert-extras/mainline.git"
   },
   "dependencies": {
     "coffee-script": "latest",
+    "should": "*",
     "difflet": "latest",
     "charm": "0.0.x"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+    "mocha": "*"
   }
 }

@@ -1,8 +1,9 @@
 difflet = require 'difflet'
 charm   = require 'charm'
 should  = require 'should'
+AssertionError = require('assert').AssertionError
 
-should.Assertion.prototype.equalHash = (expected) ->
+detailedDifferenceMatcher = (expected) ->
   actual = @obj
   differenceMap =
     inserted:
@@ -44,17 +45,28 @@ should.Assertion.prototype.equalHash = (expected) ->
     stream.end = -> @emit('end')
     stream
 
-  differenceSummary = =>
-    str = 'Total differences: '
-    stream = constructStream()
-    stream.on 'data', (data) -> str += data
-    
-    delete @c
-    for type, val of differenceMap
-      colorForDifference type, stream, false
-      stream.emit 'data', "\t#{type}: #{val.count}\t"
-      resetColor type, stream
-    str
+  printDifferences = (diffString) =>
+    differenceSummary = =>
+      str = 'Total differences: '
+      stream = constructStream()
+      stream.on 'data', (data) -> str += data
+      
+      delete @c
+      for type, val of differenceMap
+        continue if type == 'comment'
+
+        colorForDifference type, stream, false
+        stream.emit 'data', "\t#{type}: #{val.count}\t"
+        resetColor type, stream
+      str
+
+    "\n\u001b[0m#{diffString}\n\n#{differenceSummary()}\n\n"
 
   differences = differenceFound()
-  should.equal !!differences, false, "\n#{differences}\n\n#{differenceSummary()}\n\n"
+  @assert !differences, (-> console.log(printDifferences(differences)); "The Objects differ"), (-> 'The Objects are identical')
+  this
+
+should.Assertion.prototype.equalArray  = detailedDifferenceMatcher
+should.Assertion.prototype.equalObject = detailedDifferenceMatcher
+should.Assertion.prototype.equalObj    = detailedDifferenceMatcher
+module.exports = should

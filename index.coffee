@@ -1,1 +1,1 @@
-module.exports = require 'src/hash_equality'
+module.exports = require 'src/detailed_equality'
