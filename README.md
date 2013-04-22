@@ -53,4 +53,4 @@ This failing test:
 
 will output hash differences like:
 
-[![Example](https://raw.github.com/benkitzelman/very-assertive/master/diffs.png)
+[![Example](https://raw.github.com/benkitzelman/very-assertive/master/diffs.png)]
