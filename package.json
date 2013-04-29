@@ -17,9 +17,9 @@
     "url": "git://github.com/benkitzelman/very-assertive.git"
   },
   "dependencies": {
-    "coffee-script": "latest",
+    "coffee-script": "*",
     "should": "*",
-    "difflet": "latest",
+    "difflet": "*",
     "charm": "0.0.x"
   },
   "devDependencies": {
