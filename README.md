@@ -38,8 +38,8 @@ print detailed info on differences between JS arrays.
 one = [1,2,3]
 two = [4,5,6]
 
-one.should.equalObject one
-one.should.not.equalObject two
+one.should.equalArray one
+one.should.not.equalArray two
 ```
 
 example output
@@ -53,4 +53,4 @@ This failing test:
 
 will output hash differences like:
 
-[![Example](https://raw.github.com/benkitzelman/very-assertive/master/diffs.png)]
+![Example](https://raw.github.com/benkitzelman/very-assertive/master/diffs.png)
