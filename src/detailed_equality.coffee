@@ -69,6 +69,7 @@ detailedDifferenceMatcher = (expected) ->
 unchainedDetailedDifferenceMatcher = (negated = false) ->
   (expected, actual) ->
     if !negated
+      return should.not.exist(actual) unless expected
       should.exist expected
       should.exist actual
       actual.should.equalObject expected

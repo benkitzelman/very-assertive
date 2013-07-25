@@ -10,22 +10,14 @@ describe '#equalObject', ->
   it 'should detect differences on deeply nested properties', ->
     {test: {one: {two:'yay'}}}.should.not.equalObject {test: {one: {two:'yay!'}}}
 
-  describe 'unchained', ->
-    it 'should be callable', ->
-      subject = {test: 'yay'}
-      should.equalObject subject, subject
-
-    describe 'negated', ->
-      it 'should be callable', ->
-        should.not.equalObject {test: 'yay'}, {test: 'boo'}
-
-      it 'should handle null actuals', ->
-        should.not.equalObject {test: 'yay'}, null
-
-      it 'should handle null expecteds', ->
-        should.not.equalObject null, {test: 'yay'}
+describe '#equalObj', ->
+  it 'should be an alias for equalObject', ->
+    should.equalObj.should.eql should.equalObject
 
 describe '#equalArray', ->
+  it 'should be an alias for equalObject', ->
+    should.equalArray.should.eql should.equalObject
+
   it 'should be callable unchained', ->
     subject = [1,2,3]
     should.equalArray subject, subject
@@ -38,3 +30,24 @@ describe '#equalArray', ->
 
   it 'should detect differences on deeply nested properties', ->
     [{a:'a'}, {b:{c:'c'}}].should.not.equalObject [{a:'a'}, {b:{c:'d'}}]
+
+describe 'unchained', ->
+  it 'should be callable', ->
+    subject = {test: 'yay'}
+    should.equalObject subject, subject
+
+  it 'should be true when both null', ->
+    should.equalObject null, null
+
+  it 'should be true when comparing null and undefined', ->
+    should.equalObject null, undefined
+
+  describe 'negated', ->
+    it 'should be callable', ->
+      should.not.equalObject {test: 'yay'}, {test: 'boo'}
+
+    it 'should handle null actuals', ->
+      should.not.equalObject {test: 'yay'}, null
+
+    it 'should handle null expecteds', ->
+      should.not.equalObject null, {test: 'yay'}

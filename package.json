@@ -1,6 +1,6 @@
 {
   "name": "very-assertive",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An Assertion library for Should.js defining a descriptive object comparator indicating how two objects differ (i.e. which properties have been modified / deleted / added)",
   "homepage": "http://thecodeabode.blogspot.com",
   "author": {
