@@ -66,13 +66,21 @@ detailedDifferenceMatcher = (expected) ->
   @assert !differences, (-> console.log(printDifferences(differences)); "The Objects differ"), (-> 'The Objects are identical')
   this
 
-unchainedDetailedDifferenceMatcher = (expected, actual) ->
-  actual.should.equalObject expected
+unchainedDetailedDifferenceMatcher = (negated = false) ->
+  (expected, actual) ->
+    if !negated
+      should.exist expected
+      should.exist actual
+      actual.should.equalObject expected
+    else
+      return should.exist(expected) unless actual
+      actual.should.not.equalObject expected
 
-should.Assertion.prototype.equalArray  = detailedDifferenceMatcher
-should.Assertion.prototype.equalObject = detailedDifferenceMatcher
-should.Assertion.prototype.equalObj    = detailedDifferenceMatcher
-should.equalObject = unchainedDetailedDifferenceMatcher
-should.equalObj    = unchainedDetailedDifferenceMatcher
-should.equalArray  = unchainedDetailedDifferenceMatcher
+# chained
+should.Assertion.prototype.equalArray = should.Assertion.prototype.equalObject = should.Assertion.prototype.equalObj = detailedDifferenceMatcher
+# unchained
+should.equalArray = should.equalObj = should.equalObject = unchainedDetailedDifferenceMatcher()
+#unchained negated
+should.not.equalArray = should.not.equalObj = should.not.equalObject = unchainedDetailedDifferenceMatcher(true)
+
 module.exports = should
