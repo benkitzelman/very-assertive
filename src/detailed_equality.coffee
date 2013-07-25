@@ -66,7 +66,13 @@ detailedDifferenceMatcher = (expected) ->
   @assert !differences, (-> console.log(printDifferences(differences)); "The Objects differ"), (-> 'The Objects are identical')
   this
 
+unchainedDetailedDifferenceMatcher = (expected, actual) ->
+  actual.should.equalObject expected
+
 should.Assertion.prototype.equalArray  = detailedDifferenceMatcher
 should.Assertion.prototype.equalObject = detailedDifferenceMatcher
 should.Assertion.prototype.equalObj    = detailedDifferenceMatcher
+should.equalObject = unchainedDetailedDifferenceMatcher
+should.equalObj    = unchainedDetailedDifferenceMatcher
+should.equalArray  = unchainedDetailedDifferenceMatcher
 module.exports = should

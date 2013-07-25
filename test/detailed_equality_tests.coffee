@@ -4,6 +4,10 @@ describe '#equalObject', ->
   it 'should correctly match a hash', ->
     {test: 'yay'}.should.equalObject {test: 'yay'}
 
+  it 'should be callable unchained', ->
+    subject = {test: 'yay'}
+    should.equalObject subject, subject
+
   it 'should obey the negation property', ->
     {test: 'yay'}.should.not.equalObject {test: 'yay!'}
 
@@ -11,6 +15,10 @@ describe '#equalObject', ->
     {test: {one: {two:'yay'}}}.should.not.equalObject {test: {one: {two:'yay!'}}}
 
 describe '#equalArray', ->
+  it 'should be callable unchained', ->
+    subject = [1,2,3]
+    should.equalArray subject, subject
+
   it 'should correctly match an array', ->
     [1,2,3].should.equalArray [1,2,3]
 
