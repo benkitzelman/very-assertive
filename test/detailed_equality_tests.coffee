@@ -4,11 +4,17 @@ describe '#equalObject', ->
   it 'should correctly match a hash', ->
     {test: 'yay'}.should.equalObject {test: 'yay'}
 
+  it 'should correctly match strings', ->
+    should.equalObj "blah", "blah"
+
   it 'should obey the negation property', ->
     {test: 'yay'}.should.not.equalObject {test: 'yay!'}
 
   it 'should detect differences on deeply nested properties', ->
     {test: {one: {two:'yay'}}}.should.not.equalObject {test: {one: {two:'yay!'}}}
+
+  it 'should detect differences on strings', ->
+    should.not.equalObj "blah", "not blah"
 
 describe '#equalObj', ->
   it 'should be an alias for equalObject', ->
