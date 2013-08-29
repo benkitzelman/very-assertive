@@ -3,8 +3,7 @@ charm   = require 'charm'
 should  = require 'should'
 AssertionError = require('assert').AssertionError
 
-detailedDifferenceMatcher = (expected) ->
-  actual = @obj
+getDifferences = (actual, expected) ->
   differenceMap =
     inserted:
       color: 'green'
@@ -63,25 +62,49 @@ detailedDifferenceMatcher = (expected) ->
     "\n\u001b[0m#{diffString}\n\n#{differenceSummary()}\n\n"
 
   differences = differenceFound()
+
+
+detailedDifferenceMatcher = (expected) ->
+  differences = getDifferences @obj, expected
   @assert !differences, (-> console.log(printDifferences(differences)); "The Objects differ"), (-> 'The Objects are identical')
   this
 
-unchainedDetailedDifferenceMatcher = (negated = false) ->
+inclusionMatcher = (expected) ->
+  found = false
+  for val in @obj
+    found = !getDifferences(val, expected)
+    break if found
+
+  @assert found, (-> "The Object was not found"), (-> 'The Objects was included')
+
+
+unchainedTester = (equalityTest, negated) ->
   (expected, actual) ->
     if !negated
       return should.not.exist(actual) unless expected
       should.exist expected
       should.exist actual
-      actual.should.equalObject expected
+      actual.should[equalityTest] expected
     else
       return should.exist(expected) unless actual
-      actual.should.not.equalObject expected
+      actual.should.not[equalityTest] expected
+
+unchainedDetailedDifferenceMatcher = (negated = false) -> 
+  unchainedTester('equalObject', negated)
+
+unchainedInclusionMatcher = (negated = false) -> 
+  unchainedTester('includeObject', negated)
 
 # chained
 should.Assertion.prototype.equalArray = should.Assertion.prototype.equalObject = should.Assertion.prototype.equalObj = detailedDifferenceMatcher
+should.Assertion.prototype.includeArray = should.Assertion.prototype.includeObject = should.Assertion.prototype.includeObj = inclusionMatcher
+
 # unchained
 should.equalArray = should.equalObj = should.equalObject = unchainedDetailedDifferenceMatcher()
+should.includeArray = should.includeObj = should.includeObject = unchainedInclusionMatcher()
+
 #unchained negated
 should.not.equalArray = should.not.equalObj = should.not.equalObject = unchainedDetailedDifferenceMatcher(true)
+should.not.includeArray = should.not.includeObj = should.not.includeObject = unchainedInclusionMatcher(true)
 
 module.exports = should

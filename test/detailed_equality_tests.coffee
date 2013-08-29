@@ -16,6 +16,27 @@ describe '#equalObject', ->
   it 'should detect differences on strings', ->
     should.not.equalObj "blah", "not blah"
 
+  describe 'unchained', ->
+    it 'should be callable', ->
+      subject = {test: 'yay'}
+      should.equalObject subject, subject
+
+    it 'should be true when both null', ->
+      should.equalObject null, null
+
+    it 'should be true when comparing null and undefined', ->
+      should.equalObject null, undefined
+
+    describe 'negated', ->
+      it 'should be callable', ->
+        should.not.equalObject {test: 'yay'}, {test: 'boo'}
+
+      it 'should handle null actuals', ->
+        should.not.equalObject {test: 'yay'}, null
+
+      it 'should handle null expecteds', ->
+        should.not.equalObject null, {test: 'yay'}
+
 describe '#equalObj', ->
   it 'should be an alias for equalObject', ->
     should.equalObj.should.eql should.equalObject
@@ -37,23 +58,32 @@ describe '#equalArray', ->
   it 'should detect differences on deeply nested properties', ->
     [{a:'a'}, {b:{c:'c'}}].should.not.equalObject [{a:'a'}, {b:{c:'d'}}]
 
-describe 'unchained', ->
-  it 'should be callable', ->
-    subject = {test: 'yay'}
-    should.equalObject subject, subject
 
-  it 'should be true when both null', ->
-    should.equalObject null, null
+describe '#includeObject', ->
+  it 'should correctly find an object in an array', ->
+    obj = {test: 'yay'}
+    [1, "string", {something: 'else'}, obj].should.includeObject obj
 
-  it 'should be true when comparing null and undefined', ->
-    should.equalObject null, undefined
+  it 'should obey the negation property', ->
+    [1, "string", {something: 'else'}].should.not.includeObject {test: 'yay'}
 
-  describe 'negated', ->
+  describe 'unchained', ->
     it 'should be callable', ->
-      should.not.equalObject {test: 'yay'}, {test: 'boo'}
+      subject = {test: 'yay'}
+      should.includeObject subject, [subject]
 
-    it 'should handle null actuals', ->
-      should.not.equalObject {test: 'yay'}, null
+    it 'should be true when both null', ->
+      should.includeObject null, null
 
-    it 'should handle null expecteds', ->
-      should.not.equalObject null, {test: 'yay'}
+    it 'should be true when comparing null and undefined', ->
+      should.includeObject null, undefined
+
+    describe 'negated', ->
+      it 'should be callable', ->
+        should.not.includeObject {test: 'yay'}, [{test: 'boo'}]
+
+      it 'should handle null actuals', ->
+        should.not.includeObject {test: 'yay'}, null
+
+      it 'should handle null expecteds', ->
+        should.not.includeObject null, {test: 'yay'}
