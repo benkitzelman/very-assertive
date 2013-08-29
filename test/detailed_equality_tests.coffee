@@ -1,6 +1,9 @@
 should = require '../index'
 
 describe '#equalObject', ->
+  xit 'should find a difference', ->
+    {test:' asdad'}.should.equalObject {as:"rwerwr"}
+
   it 'should correctly match a hash', ->
     {test: 'yay'}.should.equalObject {test: 'yay'}
 

@@ -44,7 +44,9 @@ getDifferences = (actual, expected) ->
     stream.end = -> @emit('end')
     stream
 
-  printDifferences = (diffString) =>
+  formatDifferences = (diffString) =>
+    return unless diffString
+
     differenceSummary = =>
       str = 'Total differences: '
       stream = constructStream()
@@ -61,12 +63,11 @@ getDifferences = (actual, expected) ->
 
     "\n\u001b[0m#{diffString}\n\n#{differenceSummary()}\n\n"
 
-  differences = differenceFound()
-
+  formatDifferences differenceFound()
 
 detailedDifferenceMatcher = (expected) ->
   differences = getDifferences @obj, expected
-  @assert !differences, (-> console.log(printDifferences(differences)); "The Objects differ"), (-> 'The Objects are identical')
+  @assert !differences, (-> console.log(differences); "The Objects differ"), (-> 'The Objects are identical')
   this
 
 inclusionMatcher = (expected) ->
