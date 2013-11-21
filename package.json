@@ -19,7 +19,7 @@
   "dependencies": {
     "coffee-script": "*",
     "should": "*",
-    "difflet": "git+ssh://git@github.com:benkitzelman/difflet.git#v0.2.6b",
+    "difflet": "git+https://github.com/benkitzelman/difflet.git#v0.2.6b",
     "charm": "0.0.x"
   },
   "devDependencies": {
