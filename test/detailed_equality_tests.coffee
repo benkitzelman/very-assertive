@@ -16,6 +16,21 @@ describe '#equalObject', ->
   it 'should detect differences on deeply nested properties', ->
     {test: {one: {two:'yay'}}}.should.not.equalObject {test: {one: {two:'yay!'}}}
 
+  it 'should detect differences on deeply nested arrays', ->
+    subjectA =
+      someProp: 'some val'
+      levelOne:
+        levelTwo:
+          array: ['a', 'b', 3]
+
+    subjectB =
+      someProp: 'some val'
+      levelOne:
+        levelTwo:
+          array: []
+
+    subjectA.should.not.equalObject subjectB
+
   it 'should detect differences on strings', ->
     should.not.equalObj "blah", "not blah"
 

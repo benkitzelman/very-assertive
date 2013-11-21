@@ -1,6 +1,6 @@
 {
   "name": "very-assertive",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An Assertion library for Should.js defining a descriptive object comparator indicating how two objects differ (i.e. which properties have been modified / deleted / added)",
   "homepage": "http://thecodeabode.blogspot.com",
   "author": {
@@ -19,7 +19,7 @@
   "dependencies": {
     "coffee-script": "*",
     "should": "*",
-    "difflet": "*",
+    "difflet": "git+ssh://git@github.com:benkitzelman/difflet.git#v0.2.6b",
     "charm": "0.0.x"
   },
   "devDependencies": {
