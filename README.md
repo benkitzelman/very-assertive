@@ -54,3 +54,7 @@ This failing test:
 will output hash differences like:
 
 ![Example](https://raw.github.com/benkitzelman/very-assertive/master/diffs.png)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/benkitzelman/very-assertive/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
