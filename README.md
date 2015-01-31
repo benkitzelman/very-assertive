@@ -10,6 +10,8 @@ using
 
 very-assertive mixes in with other should assertions, therefore all you need to do is require it...
 
+`npm install very-assertive`
+
 ```coffeescript
 
 require 'very-assertive'
