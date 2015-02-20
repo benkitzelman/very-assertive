@@ -8,10 +8,10 @@ getDifferences = (actual, expected) ->
     inserted:
       color: 'green'
       count: 0
-    updated:  
+    updated:
       color: 'blue'
       count: 0
-    deleted: 
+    deleted:
       color: 'red'
       count: 0
     comment:
@@ -51,7 +51,7 @@ getDifferences = (actual, expected) ->
       str = 'Total differences: '
       stream = constructStream()
       stream.on 'data', (data) -> str += data
-      
+
       delete @c
       for type, val of differenceMap
         continue if type == 'comment'
@@ -67,13 +67,15 @@ getDifferences = (actual, expected) ->
 
 detailedDifferenceMatcher = (expected) ->
   differences = getDifferences @obj, expected
-  @assert !differences, (-> console.log(differences); "The Objects differ"), (-> 'The Objects are identical')
+  isOk        = if @negate then !!differences else !differences
+  @assert isOk, (-> console.log(differences); "The Objects differ"), (-> 'The Objects are identical')
   this
 
 inclusionMatcher = (expected) ->
   found = false
   for val in @obj
-    found = !getDifferences(val, expected)
+    differences = getDifferences val, expected
+    found       = if @negate then !!differences else !differences
     break if found
 
   @assert found, (-> "The Object was not found"), (-> 'The Objects was included')
@@ -81,19 +83,21 @@ inclusionMatcher = (expected) ->
 
 unchainedTester = (equalityTest, negated) ->
   (expected, actual) ->
-    if !negated
+    if negated
+      return true if actual? and not expected?
+      return true if expected? and not actual?
+      actual.should.not[equalityTest] expected
+
+    else
       return should.not.exist(actual) unless expected
       should.exist expected
       should.exist actual
       actual.should[equalityTest] expected
-    else
-      return should.exist(expected) unless actual
-      actual.should.not[equalityTest] expected
 
-unchainedDetailedDifferenceMatcher = (negated = false) -> 
+unchainedDetailedDifferenceMatcher = (negated = false) ->
   unchainedTester('equalObject', negated)
 
-unchainedInclusionMatcher = (negated = false) -> 
+unchainedInclusionMatcher = (negated = false) ->
   unchainedTester('includeObject', negated)
 
 # chained
