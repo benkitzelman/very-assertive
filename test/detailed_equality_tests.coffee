@@ -1,4 +1,4 @@
-should = require '../index'
+should = require '../index.coffee'
 
 describe '#equalObject', ->
   xit 'should find a difference', ->
