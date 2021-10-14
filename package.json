@@ -1,6 +1,6 @@
 {
   "name": "very-assertive",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "An Assertion library for Should.js defining a descriptive object comparator indicating how two objects differ (i.e. which properties have been modified / deleted / added)",
   "homepage": "http://thecodeabode.blogspot.com",
   "author": {
@@ -8,25 +8,36 @@
     "email": "benkitzelman@hotmail.com",
     "url": "http://thecodeabode.blogspot.com"
   },
-  "main": "index.coffee",
+  "main": "index.js",
   "scripts": {
-    "coverage": "mocha --reporter html-cov > coverage.html && rm -rf coverage/ && open coverage.html",
-    "test": "mocha",
-    "prepublish": "coffee -c -o lib src/*.coffee"
+    "ci": "npm run coverage",
+    "coverage": "nyc npm run test && rm -rf coverage",
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/benkitzelman/very-assertive.git"
   },
+  "nyc": {
+    "exclude": [
+      "config/settings.js",
+      "mock",
+      "script",
+      "test"
+    ],
+    "check-coverage": true,
+    "statements": 94,
+    "branches": 100,
+    "functions": 75,
+    "lines": 100
+  },
   "dependencies": {
-    "coffee-script": "*",
-    "should": ">=5.0.0",
+    "charm": "0.0.x",
     "difflet": "git+https://github.com/benkitzelman/difflet.git#v0.2.6b",
-    "charm": "0.0.x"
+    "should": ">=13.2.0"
   },
   "devDependencies": {
-    "coffee-coverage": "^0.6.2",
-    "istanbul": "^0.3.17",
-    "mocha": "*"
+    "mocha": "*",
+    "nyc": "~15.1.0"
   }
 }

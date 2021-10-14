@@ -1,1 +1,1 @@
-module.exports = require('./lib/detailed_equality')
+module.exports = require('./lib/detailed_equality');
