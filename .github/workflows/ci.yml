@@ -1,0 +1,30 @@
+name: test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    env:
+      NODE_ENV: test
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - uses: bahmutov/npm-install@v1
+
+      - name: run tests
+        run: npm run ci
